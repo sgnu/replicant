@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>replicant osu! overlay</title>
+
+    <script src="https://unpkg.com/vue@3.2.14/dist/vue.global.js"></script>
+    <script src="/lib/reconnecting-websocket.js"></script>
+    <script src="/lib/consts.js"></script>
+    <script src="/lib/utils.js"></script>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div id="app" class="app" v-cloak>
+        <Transition name="top">
+            <div class="ingame-bm-info" v-if="isPlayingOrWatching && !(getToken('ingameInterfaceIsEnabled'))">
+                <p>{{ getToken('mapArtistTitleUnicode') }} [{{ getToken('diffName') }}] <span
+                        v-if="getToken('mods') !==  'None'">+{{ getToken('mods' )}}</span></p>
+                <p>/b/{{ getToken('mapid', 0) }}</p>
+                <div class="ingame-bm-stats">
+                    <p class="ingame-bm-sr">{{ getToken('liveStarRating', 2) }}★</p>
+                    <p class="ingame-bm-cs">CS{{ getToken('mCS', 1) }}</p>
+                    <p class="ingame-bm-ar">AR{{ getToken('mAR', 1) }}</p>
+                    <p class="ingame-bm-od">OD{{ getToken('mOD', 1) }}</p>
+                    <p class="ingame-bm-bpm">{{ getToken('currentBpm', 0) }}BPM</p>
+                </div>
+            </div>
+        </Transition>
+
+        <Transition name="top">
+            <div class="ingame-play-stats" v-if="isPlayingOrWatching && !(getToken('ingameInterfaceIsEnabled'))">
+                <p class="ingame-play-score">{{ getScore() }}</p>
+                <p class="ingame-play-accuracy">{{ getToken('acc', 2) }}%</p>
+                <div class="ingame-hits">
+                    <p class="hit300">{{ getToken('c300') }}</p>
+                    <p class="hit100">{{ getToken('c100') }}</p>
+                    <p class="hit50">{{ getToken('c50') }}</p>
+                    <p class="hit0">{{ getToken('miss') }}</p>
+                </div>
+                <p class="ingame-play-currentpp">{{ getToken('ppIfMapEndsNow', 0) }}<span class="ingame-pp">pp</span>
+                </p>
+                <Transition name="top">
+                    <p class="ingame-play fcpp" v-if="getToken('sliderBreaks') > 0 || getToken('miss') > 0">{{
+                        getToken('noChokePp', 0)}}<span class="ingame-pp">pp if FC</span></p>
+                </Transition>
+            </div>
+        </Transition>
+
+        <Transition name="bottom">
+            <p v-if="isPlayingOrWatching" class="ingame-ur">{{ getToken('convertedUnstableRate', 2) }}</p>
+        </Transition>
+
+        <Transition name="bottom">
+            <p v-if="isPlayingOrWatching && !getToken('ingameInterfaceIsEnabled')" class="ingame-combo">{{
+                getToken('combo', 0) }}x</p>
+        </Transition>
+
+        <Transition name="bottom">
+            <p v-if="isPlayingOrWatching && (getToken('sliderBreaks') > 0 || getToken('miss') > 0) && (getToken('combo') < getToken('currentMaxCombo') - 2)"
+                class="ingame-maxcombo">{{ getToken('currentMaxCombo', 0) }}x max combo</p>
+        </Transition>
+
+        <div class="results-container">
+            <Transition name="top">
+                <div v-if="isResults" class="results-box">
+                    <p class="results-pp">{{ getToken('ppIfMapEndsNow', 0) }}<span class="results-pptext">pp</span> /
+                        <span class="results-maxpp">{{
+                            getToken('osu_mSSPP', 0) }}</span><span class="results-pptext">pp</span></p>
+                    <p class="results-ur">{{ getToken('convertedUnstableRate', 2) }} UR</p>
+                </div>
+            </Transition>
+        </div>
+    </div>
+
+    <script src="./main.js" type="module"></script>
+</body>
+
+</html>

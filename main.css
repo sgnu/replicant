@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap');
+@import url('./catppuccin.css');
+
+body, html {
+    background-color: black;
+    color: var(--ctp-mocha-text);
+    font-family: 'Noto Sans JP',  sans-serif;
+}
+
+p {
+    margin: 0;
+}
+
+.ingame-bm-info {
+    color: var(--ctp-mocha-text);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    position: absolute;
+    top: 16px;
+    left: 16px;
+}
+
+.ingame-bm-stats {
+    font-family: 'Noto Sans Mono', monospace;
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.ingame-bm-stats p {
+    border-radius: 4px;
+    padding: 4px 12px;
+}
+
+.ingame-bm-sr {
+    background-color: var(--ctp-mocha-yellow);
+    color: var(--ctp-mocha-base);
+}
+
+.ingame-bm-cs {
+    background-color: var(--ctp-mocha-blue);
+    color: var(--ctp-mocha-base);
+}
+
+.ingame-bm-ar {
+    background-color: var(--ctp-mocha-red);
+    color: var(--ctp-mocha-base);
+}
+
+.ingame-bm-od {
+    background-color: var(--ctp-mocha-green);
+    color: var(--ctp-mocha-base);
+}
+
+.ingame-bm-bpm {
+    background-color: var(--ctp-mocha-rosewater);
+    color: var(--ctp-mocha-base);
+}
+
+.ingame-play-stats {
+    color: var(--ctp-mocha-text);
+    font-family: 'Noto Sans Mono', monospace;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 4px;
+
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+.ingame-play-score {
+    font-size: 24px;
+}
+
+.ingame-pp {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.ingame-hits {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ingame-hits p {
+    border-right: 2px solid;
+    padding-right: 12px;
+}
+
+.ingame-hits .hit300 {
+    border-color: var(--ctp-mocha-blue);
+}
+
+.ingame-hits .hit100 {
+    border-color: var(--ctp-mocha-green);
+}
+
+.ingame-hits .hit50 {
+    border-color: var(--ctp-mocha-peach);
+}
+
+.ingame-hits .hit0 {
+    border-color: var(--ctp-mocha-red);
+}
+
+.ingame-ur {
+    font-family: 'Noto Sans Mono', monospace;
+    font-size: 24px;
+    text-align: center;
+
+    width: 100vw;
+    margin: 0;
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+}
+
+.ingame-combo {
+    font-family: 'Noto Sans Mono', monospace;
+    font-size: 32px;
+
+    margin: 0;
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+}
+
+.ingame-maxcombo {
+    font-family: 'Noto Sans Mono', monospace;
+    font-size: 16px;
+
+    translate: 0 0;
+    margin: 0;
+    position: absolute;
+    bottom: 64px;
+    left: 16px;
+}
+
+.results-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.results-box {
+    background-color: var(--ctp-mocha-base);
+    border-radius: 8px;
+    box-sizing: border-box;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 240px;
+    height: 112px;
+    padding: 16px;
+}
+
+.results-pp {
+    color: var(--ctp-mocha-text);
+    font-size: 32px;
+    margin: 0;
+}
+
+.results-maxpp  {
+    color: var(--ctp-mocha-subtext1);
+    font-size: 24px;
+}
+
+.results-pptext {
+    color: var(--ctp-mocha-mauve);
+    font-size: 16px;
+}
+
+.results-ur {
+    color: var(--ctp-mocha-text);
+}
+
+.bottom-enter-active,
+.bottom-leave-active,
+.top-enter-active,
+.top-leave-active {
+    transition: 0.167s ease-out;
+}
+
+.top-enter-from,
+.top-leave-to {
+    opacity: 0;
+    transform: translateY(-12px);
+}
+
+.bottom-enter-from,
+.bottom-leave-to {
+    opacity: 0;
+    transform: translateY(12px);
+}
