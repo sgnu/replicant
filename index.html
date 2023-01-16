@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>replicant osu! overlay</title>
 
-    <script src="https://unpkg.com/vue@3.2.14/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3.2.25/dist/vue.global.js"></script>
     <script src="/lib/reconnecting-websocket.js"></script>
     <script src="/lib/consts.js"></script>
     <script src="/lib/utils.js"></script>
@@ -70,10 +70,21 @@
                     <p class="results-pp">{{ getToken('ppIfMapEndsNow', 0) }}<span class="results-pptext">pp</span> /
                         <span class="results-maxpp">{{
                             getToken('osu_mSSPP', 0) }}</span><span class="results-pptext">pp</span></p>
-                    <p class="results-ur">{{ getToken('convertedUnstableRate', 2) }} UR</p>
+                    <!-- <p class="results-ur">{{ getToken('convertedUnstableRate', 2) }} UR</p> -->
                 </div>
             </Transition>
         </div>
+
+        <Transition name="left">
+            <div class="leaderboard-container" v-if="!isLeaderboardVisible && getLeaderboard && !getToken('isBreakTime')">
+                <transition-group name="leaderboard" tag="div">
+                    <div v-for="player in getLeaderboard" :key="`${player.Username}-${player.Score}`" class="lb-player" :class="{'lb-our-player': isOurPlayer(player, getToken('leaderBoardMainPlayer'))}" ref="leaderboardSlots">
+                        <p class="lb-name">{{ player.Position }}. {{ player.Username }}</p> <p class="lb-acc">{{ getAccuracy(player) }}%</p>
+                        <p class="lb-score">{{ formatNumber(player.Score) }}</p> <p class="lb-combo">{{ formatNumber(player.MaxCombo) }}x</p>
+                    </div>
+                </transition-group>
+            </div>
+        </Transition>
     </div>
 
     <script src="./main.js" type="module"></script>

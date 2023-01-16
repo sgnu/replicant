@@ -9,6 +9,7 @@ const app = {
       tokens: {},
       rws: {},
       settings: {},
+      scrolling: undefined,
     });
 
     const getToken = (tokenName, decimalPlaces) => _GetToken(data.rws, data.tokens, tokenName, decimalPlaces);
@@ -36,6 +37,34 @@ const app = {
       _IsInStatus(data.rws, data.tokens, window.overlay.osuStatus.ResultsScreen)
     )
 
+    let isLeaderboardVisible = Vue.computed(() => {
+      if (isPlayingOrWatching.value) {
+        try {
+          const lbPlayer = JSON.parse(getToken('leaderBoardMainPlayer'))
+          return lbPlayer.IsLeaderboardVisible
+        } catch {
+          //  continue to return true
+        }
+      }
+
+      return true   // true means leaderboard element will not be rendered
+    })
+
+    let getLeaderboard = Vue.computed(() => {
+      if (isPlayingOrWatching.value) {
+        try {
+          const leaderboard = JSON.parse(getToken('leaderBoardPlayers'))
+          return leaderboard
+        } catch {
+          return undefined
+        }
+      }
+    })
+
+    const getAccuracy = (player) => {
+      return ((300 * player.Hit300 + 100 * player.Hit100 + 50 * player.Hit50) / (300 * (player.Hit300 + player.Hit100 + player.Hit50 + player.HitMiss)) * 100).toFixed(2)
+    }
+
     let ppValue = Vue.computed(() => {
       if (isPlayingOrWatching.value) return getToken('ppIfMapEndsNow', 1);
       if (data.settings.SimulatePPWhenListening) return getToken('simulatedPp', 1);
@@ -51,6 +80,9 @@ const app = {
       isPlayingOrWatching,
       isResults,
       isMania,
+      isLeaderboardVisible,
+      getLeaderboard,
+      getAccuracy,
       mapStrains,
       ppValue,
       mapProgress,
@@ -105,6 +137,35 @@ const app = {
     getScore() {
       return new Intl.NumberFormat(undefined, { useGrouping: true }).format(this.getToken('score', 0));
     },
+
+    formatNumber(number) {
+      return new Intl.NumberFormat(undefined, { useGrouping: true }).format(number);
+    },
+
+    isOurPlayer(player, ourPlayerRawData) {
+      try {
+        const ourPlayer = JSON.parse(ourPlayerRawData)
+        return (player.Position === ourPlayer.Position)
+      } catch {
+        // return false
+      }
+    },
+
+    scrollToPlayer() {
+      try {
+        const leaderboardArray = this.$refs.leaderboardSlots
+        const element = leaderboardArray[leaderboardArray.length - 1] // our-player seems to always be the last element in the array
+        element.scrollIntoView({
+          block: 'end',
+          inline: 'nearest'
+        })
+      } catch {
+        //
+      }
+    }
+  },
+  mounted() {
+    this.data.scrolling = setInterval(this.scrollToPlayer, 33)
   }
 };
 export default app;

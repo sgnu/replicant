@@ -191,11 +191,71 @@ p {
     color: var(--ctp-mocha-text);
 }
 
+.leaderboard-container {
+    width: 240px;
+    height: 356px;
+    overflow: hidden;
+
+    position: absolute;
+    top: 50%;
+    translate: 0 -144px;
+}
+
+.leaderboard-container p {
+    display: inline-block;
+    margin: 0;
+}
+
+.lb-player {
+    background-color: var(--ctp-mocha-base);
+    border-radius: 6px;
+    box-sizing: border-box;
+    width: 240px;
+
+    display: grid;
+    grid-template-columns: auto auto;
+
+    padding: 4px 8px;
+    margin-bottom: 4px;
+}
+
+.lb-our-player {
+    background-color: var(--ctp-mocha-blue) !important;
+    color: var(--ctp-mocha-base);
+}
+
+.lb-name {
+    width: 16ch;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.lb-acc {
+    text-align: right;
+}
+
+.lb-score {
+    width: 16ch;
+}
+
+.lb-combo {
+    text-align: right;
+}
+
+.left-enter-active,
+.left-leave-active,
 .bottom-enter-active,
 .bottom-leave-active,
 .top-enter-active,
 .top-leave-active {
     transition: 0.167s ease-out;
+}
+
+.left-enter-from,
+.left-leave-to {
+    opacity: 0;
+    transform: translateX(-12px);
 }
 
 .top-enter-from,
@@ -208,4 +268,20 @@ p {
 .bottom-leave-to {
     opacity: 0;
     transform: translateY(12px);
+}
+
+/* .leaderboard-enter-active,
+.leaderboard-leave-active, */
+.leaderboard-move {
+  transition: all 0.167s ease-out;
+}
+
+.leaderboard-enter-from,
+.leaderboard-leave-to {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+
+.leaderboard-leave-active {
+    position: absolute;
 }
